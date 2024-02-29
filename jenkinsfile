@@ -12,19 +12,19 @@ pipeline {
     }
 
     stages {
-        stage('Git Checkout') {
+        stage('Git Checkout') {   # here we are clonnig code from git-hub to workspace and genrating this code by using "git: GIT"  in syntax genratar.
             steps {
                 git branch: 'main', url: 'https://github.com/jaiswaladi246/Ekart.git'
             }
         }
 
-        stage('Compile') {
+        stage('Compile') {    #here we compiling code meaning converting code into machine level language from human level.
             steps {
                 sh "mvn compile"
             }
         }
 
-        stage('Unit Tests') {
+        stage('Unit Tests') {  # here we testing code of compiling but using "-DskipTest=true" we skiping this step bcoz test case not wrriten for this code. 
             steps {
                 sh "mvn test -DskipTests=true"
             }
