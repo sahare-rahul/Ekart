@@ -8,7 +8,7 @@ pipeline {
     }
 
     environment {             # here we add enviroment section which use for defining variables which we can used in all stages in pipeline.
-        SCANNER_HOME = tool 'sonar-scanner'
+        SCANNER_HOME = tool 'sonar-scanner'   # and add sonarqube scanner tool as a veriable.
     }
 
     stages {
@@ -32,8 +32,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar') {
-                    sh ''' 
+                withSonarQubeEnv('sonar') {  # here we are adding soanrqube authentication and used "withSonarqubeEnv: prepare sonarqube scanner envirment" and 
+                    sh '''                       "sonar"  ID we created for authentication
                         $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=EKART -Dsonar.projectName=EKART \
                         -Dsonar.java.binaries=.
                     '''
@@ -50,25 +50,25 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh "mvn package -DskipTests=true"
+                sh "mvn package -DskipTests=true"   # here we pachaging code and genrating artifact but we skipping test case bcoz we dont have test code for application.
             }
         }
 
-        stage('Deploy To Nexus') {
-            steps {
+        stage('Deploy To Nexus') {  # here we are pushhing created artifact on artifact server nexus. so we downlode plugging "pipeline maven intigration plugin" 
+            steps {                  # from that pluging we see option in syntax genrator "with maven provider maven env" and genrated following syntax which connect with nexus server.
                 withMaven(globalMavenSettingsConfig: 'global-maven', jdk: 'jdk17', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
-                    sh "mvn deploy -DskipTests=true"
+                    sh "mvn deploy -DskipTests=true"    #and here runnug mvn deploy command for deploying created artifact on nenux.
                 }
             }
         }
 
-        stage('Docker Build & tag Image') {
+        stage('Docker Build & tag Image') {  # here we are using "WithDockerregistr: setup docker registry endoint" syntax genrator for logging with docker and grnrated following syntax,
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t adijaiswal/ekart:latest -f docker/Dockerfile ."
-                    }
-                }
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') { 
+                        sh "docker build -t adijaiswal/ekart:latest -f docker/Dockerfile ."   # here we are building docker images and giving tag but docker file 
+                    }                                                                           is not pesent in current dir so for that we -f docker/Docker .
+                }                                                                                in docker folder Dockerfile are pesent . meam current dir EKART.
             }
         }
 
