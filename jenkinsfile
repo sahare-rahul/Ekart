@@ -74,15 +74,15 @@ pipeline {
 
         stage('Trivy Scan') {
             steps {
-                sh "trivy image adijaiswal/ekart:latest > trivy-report.txt "
-            }
+                sh "trivy image adijaiswal/ekart:latest > trivy-report.txt "   # using trivy image commad trivy scanning created images and storing report in 
+            }                                                                     trivy-report.txt this file we can give any name.                           
         }
 
         stage('Docker Push Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push adijaiswal/ekart:latest"
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {  #this is login credential for docker-hub 
+                        sh "docker push adijaiswal/ekart:latest"            # using this commad we pusshing created images on docke-hub
                     }
                 }
             }
