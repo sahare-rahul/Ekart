@@ -41,11 +41,11 @@ pipeline {
             }
         }
 
-        stage('OWASP Dependency Check') {
+        stage('OWASP Dependency Check') {  # here we checking os dependecy check 1st we used "dependecy check: invoke dependency" for grnrating 1st syntax
             steps {
-                dependencyCheck additionalArguments: ' --scan ./', odcInstallation: 'DC'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
+                dependencyCheck additionalArguments: ' --scan ./', odcInstallation: 'DC'  #and here usiing --scan ./ argument to scan pom.xml file urrent dir ./ and DC is we congigure tools in jenkins
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'     # here using dependency check publisher syntax genrator and provinding 
+            }                                                                            **/dependecy-check-report.xml to genrate report in this format.
         }
 
         stage('Build') {
@@ -98,3 +98,10 @@ pipeline {
         }
     }
 }
+
+
+##### USED plugging in pipeline###
+1. sonarqube scanne 2. nexus artifactuploder. 3. docker 4. docker pipeline 5. docker build steps. 6. owasp dependency check 7. Eclips temurin installer for java.
+8.config file provider for manage nexus credentials 9. kubernetes and kebernets cli. 10.
+
+
