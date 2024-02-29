@@ -88,11 +88,11 @@ pipeline {
             }
         }
 
-        stage('Kubernetes Deploy') {
-            steps {
+        stage('Kubernetes Deploy') {  #here we downlode kubernetes and kunerneets cli plugins. and used "with kubeconfig: congigure kubernets cli" for genrating following 
+            steps {                   # syntax for connect jenkins with kubernets to do deployment on kubernets by using service accout token. 
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.8.162:6443') {
                     sh "kubectl apply -f deploymentservice.yml -n webapps"
-                    sh "kubectl get svc -n webapps"
+                    sh "kubectl get svc -n webapps"                         #and here we run commads
                 }
             }
         }
