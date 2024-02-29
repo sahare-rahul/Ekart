@@ -2,12 +2,12 @@
 pipeline {
     agent any
 
-    tools {
+    tools {                   #  here  in tools we add tools which we need in this pipeline.
         maven 'maven3'
         jdk 'jdk17'
     }
 
-    environment {
+    environment {             # here we add enviroment section which use for defining variables which we can used in all stages in pipeline.
         SCANNER_HOME = tool 'sonar-scanner'
     }
 
