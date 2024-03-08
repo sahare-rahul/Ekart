@@ -66,11 +66,11 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') { 
-                        sh "docker build -t adijaiswal/ekart:latest -f docker/Dockerfile ."   # here we are building docker images and giving tag but docker file 
+                        sh "docker build -t adijaiswal/ekart:latest -f docker/Dockerfile ."   #-1here we are building docker images and giving tag but docker file 
                     }                                                                           is not pesent in current dir so for that we -f docker/Docker .
                 }                                                                                in docker folder Dockerfile are pesent . meam current dir EKART.
-            }
-        }
+            }                                                                                   # or we used "dir:change current dir" syntxax genrater and paste current 
+        }                                                                                         workspace of job and paste our current docker file path "var/lib/jenkins/workspace/jobname/docker/dockerfile"
 
         stage('Trivy Scan') {
             steps {
