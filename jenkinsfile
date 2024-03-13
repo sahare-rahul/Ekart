@@ -34,8 +34,8 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {  # here we are adding soanrqube authentication and used "withSonarqubeEnv: prepare sonarqube scanner envirment" and 
                     sh '''                       "sonar"  ID we created for authentication
-                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=EKART -Dsonar.projectName=EKART \
-                        -Dsonar.java.binaries=.
+                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=EKART -Dsonar.projectName=EKART \    #here we giving -Dsonar.projectName="EKART" means on  
+                        -Dsonar.java.binaries=.                                                                  sonar server report will creat with this name "EKART"
                     '''
                 }
             }
